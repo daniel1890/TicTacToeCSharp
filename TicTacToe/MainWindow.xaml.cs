@@ -41,6 +41,9 @@ namespace TicTacToe
 
         #endregion Constructor
 
+        /// <summary>
+        /// Start een nieuw spel en reset alle waarden aan het begin
+        /// </summary>
         private void NewGame()
         {
             // Creeër een lege array met lege cellen
@@ -65,6 +68,46 @@ namespace TicTacToe
 
             // Zorg ervoor dat de game niet zomaar eindigd
             mGameEnded = false;
+        }
+
+        /// <summary>
+        /// Deze methode wordt aangeroepen wanneer een knop geklikt wordt
+        /// </summary>
+        /// <param name="sender">De knop die geklikt was</param>
+        /// <param name="e">De events die bij de klik horen</param>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (mGameEnded)
+            {
+                NewGame();
+                return;
+            }
+
+            // Cast de sender naar een knop
+            var button = (Button)sender;
+
+            // Vind de positie van de knop binnen de array
+            var column = Grid.GetColumn(button);
+            var row = Grid.GetRow(button);
+
+            var index = column + (row * 3);
+
+            // Doe niks wanneer de cell al een waarde bevat
+            if (mResults[index] != MarkType.Leeg)
+                return;
+
+            // Zet de waarde van de cell gebasseerd op welke speler aan de beurt is
+            mResults[index] = mPlayer1Turn ? MarkType.Kruis : MarkType.Rondje;
+
+            // Zet de knop text naar het resultaat
+            button.Content = mPlayer1Turn ? "X" : "O";
+
+            // Verander de rondjes in groen
+            if (!mPlayer1Turn)
+                button.Foreground = Brushes.Red;
+
+            // toggle tussen de beurten van de spelers
+            mPlayer1Turn ^= true;
         }
     }
 }
