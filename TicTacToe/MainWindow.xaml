@@ -17,7 +17,7 @@
     </Window.Resources>
 
     <!-- Creeër een grid met 3 columns en 3 rijen. -->
-    <Grid>
+    <Grid x:Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
